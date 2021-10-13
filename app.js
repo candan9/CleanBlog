@@ -26,15 +26,26 @@ app.get('/', async(req, res) => {
     posts
   });
 });
+
 app.get('/about', (req, res) => {
   res.render('about');
 });
+
 app.get('/add', (req, res) => {
   res.render('add_post');
 });
+
 app.post('/posts', async(req, res) => {
   await Post.create(req.body)
   res.redirect('/')
+});
+
+app.get('/posts/:id', async(req, res) => {
+  //res.render('about');
+  const post = await Post.findById(req.params.id)
+  res.render('post',{
+    post
+  })
 });
 const port = 3000;
 app.listen(port, () => {
